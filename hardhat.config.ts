@@ -6,9 +6,17 @@ const config: HardhatUserConfig = {
   solidity: "0.8.28",
   networks:{
     sepolia:{
-      url: `${process.env.ALCHEMY_URL}`,
-      accounts: [`0x${process.env.PRIVATE_KEY}`],
+      url: `${process.env.SEPOLIA_RPC}`,
+      accounts: [`0x${process.env.PRIVATE_KEY_2}`],
     },
+    arbitrum_sepolia:{
+      url: `${process.env.ARBITRUM_SEPOLIA_RPC}`,
+      accounts: [`0x${process.env.PRIVATE_KEY_2}`],
+    },
+    arbitrum:{
+      url: `${process.env.ARBITRUM_RPC}`,
+      accounts: [`0x${process.env.PRIVATE_KEY_2}`],
+    }
   },
   etherscan: {
     apiKey: `${process.env.ETHERSCAN_KEY}`,
