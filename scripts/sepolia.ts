@@ -2,12 +2,19 @@
 
 import hre, { ethers } from "hardhat";
 
+
+const ERC20_ABI = [
+    "function totalSupply() view returns (uint256)",
+    "function balanceOf(address) view returns (uint256)"
+]
+
 async function main(){
     console.log("Connect to provide(RPC) started...")
     const provider = ethers.provider;
     const signer = await provider.getSigner()
-    const balance = await provider.getBalance("0x7e363a03B4952C1C0Ea14fBD7D8bd4C027AE8293")
-    console.log(`${Number(await ethers.formatEther(balance)) * 3000} `)
+    const contract = new ethers.Contract("0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c", ERC20_ABI, signer)
+    const totalSupply = await contract.balanceOf("0x06fcE1DF49EAEE62353a20bf3a817988675124b6")
+    console.log("Total supply of the token is: ", totalSupply.toString())
 }
 
 
