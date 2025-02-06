@@ -27,7 +27,7 @@ contract Demo{
     }
 
     function changeOwner(address _address) external payable onlyOwner{
-        require(msg.value >= 0.0005 ether, "Incorrect amount of Ether");
+        require(msg.value >= 0.010 ether, "Incorrect amount of Ether");
         owner = _address;
     }
 }

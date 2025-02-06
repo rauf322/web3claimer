@@ -1,13 +1,8 @@
-# Sample Hardhat Project
+# SUPER complicated scripts 
+# Actually it's just 2 scripts who claim esxai, send xai to wallet and do the same with carv
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
-
-Try running some of the following tasks:
-
+##Firstly configure your .env file to hardhat know where to send it 
 ```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
+npx hardhat run scripts/read_smart_contract.ts --network arbitrum
 ```
+That's all what you need to execute it buddy!!!
