@@ -2,30 +2,41 @@
 
 import hre, { ethers } from "hardhat";
 
-async function main(){
-    console.log("Connect to provide(RPC) started...")
+async function get_wallets(){
     const provider = ethers.provider;
-    // //Using signers from hardhat 
-    // const signer = await provider.getSigner("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
-    // console.log(`Signer address: ${await signer.getAddress()}`);
-    // //Return massive of signers
-    // const [list_signer] = await ethers.getSigners();
     const signers = await ethers.getSigners()
-    const address_1 = signers[0]
-    const address_2 = signers[1]
-    const address_1_balance = await provider.getBalance(await address_1.getAddress())
-    const address_2_balance = await provider.getBalance(await address_2.getAddress())
-    const amount_of_send = ethers.parseEther("0.1")
+    const ADDRESS1 = signers[0]
+    const ADDRESS2 = signers[1]
+    return ({ADDRESS1, ADDRESS2,provider})
+}
+
+async function get_balance(address: any, provider: any){
+    const balance = await provider.getBalance(await address.getAddress())
+    return balance
+}
+
+async function send_ethereum(ADDRESS1: any, ADDRESS2: any, provider: any){
+    const addressBalance1 = await get_balance(ADDRESS1, provider)
+    const addressBalance2 = await get_balance(ADDRESS2, provider)
+    const minBalanceRequired = ethers.parseEther("0.004");
+    const amountOfSend = addressBalance2 - minBalanceRequired;
+    console.log(amountOfSend)
     const txData = {
-        to:(await address_2.getAddress()),
-        value: amount_of_send
+        to:(await ADDRESS1.getAddress()),
+        value: amountOfSend
     }
-    const tx = await address_1.sendTransaction(txData)
+    const tx = await ADDRESS2.sendTransaction(txData)
     await tx.wait()
     console.log(`Transaction hash: ${tx.hash}`)
-    console.log(`Balance of address_1: ${ethers.formatEther(address_1_balance)}`)
-    console.log(`Balance of address_2: ${ethers.formatEther(address_2_balance)}`)
+    console.log(`Balance of address_1: ${ethers.formatEther(await get_balance(ADDRESS1, provider))}`)
+    console.log(`Balance of address_2: ${ethers.formatEther(await get_balance(ADDRESS2, provider))}`)
 }
+
+async function main(){
+    const {ADDRESS1, ADDRESS2,provider} = await get_wallets()
+    await send_ethereum(ADDRESS1, ADDRESS2, provider)
+}
+
 
 main()
     .then(() => process.exit(0))
@@ -33,3 +44,4 @@ main()
         console.error(error);
         process.exit(1);
     })
+

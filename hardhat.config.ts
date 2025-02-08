@@ -7,19 +7,19 @@ const config: HardhatUserConfig = {
   networks:{
     sepolia:{
       url: `${process.env.SEPOLIA_RPC}`,
-      accounts: [`0x${process.env.PRIVATE_KEY_2}`],
+      accounts: [`0x${process.env.PRIVATE_KEY_2}`, `0x${process.env.PRIVATE_KEY}`]
     },
     arbitrum_sepolia:{
       url: `${process.env.ARBITRUM_SEPOLIA_RPC}`,
-      accounts: [`0x${process.env.PRIVATE_KEY_2}`],
+      accounts: [`0x${process.env.PRIVATE_KEY_2}`, `0x${process.env.PRIVATE_KEY}`]
     },
     arbitrum:{
       url: `${process.env.ARBITRUM_RPC}`,
-      accounts: [`0x${process.env.PRIVATE_KEY_2}`],
+      accounts: [`0x${process.env.PRIVATE_KEY_2}`, `0x${process.env.PRIVATE_KEY}`]
     },
     binance:{
       url: `${process.env.BINANCE_RPC}`,
-      accounts: [`0x${process.env.PRIVATE_KEY_2}`],
+      accounts: [`0x${process.env.PRIVATE_KEY_2}`, `0x${process.env.PRIVATE_KEY}`]
     }
   },
   etherscan: {
