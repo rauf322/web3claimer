@@ -16,6 +16,10 @@ const config: HardhatUserConfig = {
     arbitrum:{
       url: `${process.env.ARBITRUM_RPC}`,
       accounts: [`0x${process.env.PRIVATE_KEY_2}`],
+    },
+    binance:{
+      url: `${process.env.BINANCE_RPC}`,
+      accounts: [`0x${process.env.PRIVATE_KEY_2}`],
     }
   },
   etherscan: {

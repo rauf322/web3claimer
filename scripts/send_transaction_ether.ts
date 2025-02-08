@@ -27,8 +27,6 @@ async function main(){
     console.log(`Balance of address_2: ${ethers.formatEther(address_2_balance)}`)
 }
 
-
-
 main()
     .then(() => process.exit(0))
     .catch((error)=>{
