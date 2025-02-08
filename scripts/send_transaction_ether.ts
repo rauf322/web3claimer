@@ -2,6 +2,12 @@
 
 import hre, { ethers } from "hardhat";
 
+
+async function main(){
+    const {ADDRESS1, ADDRESS2,provider} = await get_wallets()
+    await send_ethereum(ADDRESS1, ADDRESS2, provider)
+}
+
 async function get_wallets(){
     const provider = ethers.provider;
     const signers = await ethers.getSigners()
@@ -18,7 +24,7 @@ async function get_balance(address: any, provider: any){
 async function send_ethereum(ADDRESS1: any, ADDRESS2: any, provider: any){
     const addressBalance1 = await get_balance(ADDRESS1, provider)
     const addressBalance2 = await get_balance(ADDRESS2, provider)
-    const minBalanceRequired = ethers.parseEther("0.004");
+    const minBalanceRequired = ethers.parseEther("0.0001");
     const amountOfSend = addressBalance2 - minBalanceRequired;
     console.log(amountOfSend)
     const txData = {
@@ -32,10 +38,7 @@ async function send_ethereum(ADDRESS1: any, ADDRESS2: any, provider: any){
     console.log(`Balance of address_2: ${ethers.formatEther(await get_balance(ADDRESS2, provider))}`)
 }
 
-async function main(){
-    const {ADDRESS1, ADDRESS2,provider} = await get_wallets()
-    await send_ethereum(ADDRESS1, ADDRESS2, provider)
-}
+
 
 
 main()
