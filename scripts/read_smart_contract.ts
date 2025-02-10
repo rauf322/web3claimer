@@ -39,7 +39,7 @@ async function redeem_veCarv(address:any){
     const duration = 12960000;
     const tx = await contract.withdraw(amount,duration)
     await tx.wait()
-    console.log(tx)
+    console.log(`Successfully redeemed veCarv ${amount}`)
 }
 
 
@@ -47,7 +47,7 @@ async function get_esxai(address:any){
     const contract = new ethers.Contract("0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5", ERC20_ABI, address)
     const tx = await contract.claimFromPools(["0x7b9F49fc73C380E13a0bDCf91B53C0AE612Df8BF","0x76B1121F1861e38a290eC980143149D5695B9997"])
     await tx.wait()
-    console.log(tx)
+    // console.log(tx)
 }
 
 async function redeem_esxai(address:any){
@@ -56,7 +56,8 @@ async function redeem_esxai(address:any){
     const duration = 15552000; // This is fine since it's small
     const tx = await contract.startRedemption(amount, duration);
     await tx.wait()
-    console.log(tx)
+    // console.log(tx)
+    console.log(`Successfully redeemed esxai ${amount}`)
 }
 
 main()
