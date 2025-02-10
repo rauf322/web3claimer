@@ -3,11 +3,6 @@
 import hre, { ethers } from "hardhat";
 
 
-async function main(){
-    const {ADDRESS1, ADDRESS2,provider} = await get_wallets()
-    await send_ethereum(ADDRESS1, ADDRESS2, provider)
-}
-
 async function get_wallets(){
     const provider = ethers.provider;
     const signers = await ethers.getSigners()
@@ -15,6 +10,13 @@ async function get_wallets(){
     const ADDRESS2 = signers[1]
     return ({ADDRESS1, ADDRESS2,provider})
 }
+
+async function main(){
+    const {ADDRESS1, ADDRESS2,provider} = await get_wallets()
+    await send_ethereum(ADDRESS1, ADDRESS2, provider)
+}
+
+
 
 async function get_balance(address: any, provider: any){
     const balance = await provider.getBalance(await address.getAddress())

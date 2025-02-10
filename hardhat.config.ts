@@ -15,11 +15,11 @@ const config: HardhatUserConfig = {
     },
     arbitrum:{
       url: `${process.env.ARBITRUM_RPC}`,
-      accounts: [`0x${process.env.PRIVATE_KEY_2}`, `0x${process.env.PRIVATE_KEY}`]
+      accounts: [`0x${process.env.PRIVATE_KEY_2}`, `0x${process.env.PRIVATE_KEY}`,`0x${process.env.PRIVATE_KEY_3}`]
     },
     binance:{
       url: `${process.env.BINANCE_RPC}`,
-      accounts: [`0x${process.env.PRIVATE_KEY_2}`, `0x${process.env.PRIVATE_KEY}`]
+      accounts: [`0x${process.env.PRIVATE_KEY_2}`, `0x${process.env.PRIVATE_KEY}`,]
     }
   },
   etherscan: {
