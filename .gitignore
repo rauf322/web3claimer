@@ -10,7 +10,7 @@ artifacts
 node_modules
 test
 typechain
-vscode
+.vscode
 
 # TypeChain files
 /typechain
