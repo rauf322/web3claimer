@@ -8,6 +8,8 @@ const ERC20_ABI = [
     "function claimFromPools(address[]) public",
     //esxai redeeming
     "function startRedemption(uint256 amount, uint256 duration) public",
+    //esxai claim xai
+    "function completeRedemption(uint256 index) public",
     //esxai and veCarv balanceOf
     "function balanceOf(address account) public view returns (uint256)",
     //veCarv claim
@@ -22,6 +24,7 @@ async function main(){
     const signer = await ethers.getSigners()
     await get_esxai(signer[2])
     await redeem_esxai(signer[2])
+    await complete_redemption(signer[2])
     await claim_veCarv(signer[2])
     await redeem_veCarv(signer[2])
 }
@@ -58,6 +61,13 @@ async function redeem_esxai(address:any){
     await tx.wait()
     // console.log(tx)
     console.log(`Successfully redeemed esxai ${amount}`)
+}
+
+async function complete_redemption(address:any){
+    const contract = new ethers.Contract("0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c", ERC20_ABI, address)
+    const tx = await contract.completeRedemption(69)
+    tx.wait()
+    console.log(tx)
 }
 
 main()
