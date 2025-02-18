@@ -31,12 +31,13 @@ async function main(){
             const signers:HardhatEthersSigner[] = await ethers.getSigners()
             const signer:HardhatEthersSigner = signers[2]
             // await claim_esxai(signer)
-            // await redeem_esxai(signer)
+            await redeem_esxai(signer)
             await claim_xai(signer)
-            // await claim_veCarv(signer)
-            // await redeem_veCarv(signer)
+            await claim_veCarv(signer)
+            await redeem_veCarv(signer)
         }catch(e){
-            console.log("Error at main ❌😵❌")
+            console.log("Error at main ❌😵❌ see error below:")
+            console.log(e)
         }
     }
 
@@ -49,7 +50,8 @@ async function claim_veCarv(address:HardhatEthersSigner){
         await tx.wait()
         console.log("Successfully claimed veCarv ✅")
     } catch(e){
-        console.log("Error at claim veCarv ❌😵❌")
+        console.log("Error at claim veCarv ❌😵❌ see error below:")
+        console.log(e)
     }
 }
 
@@ -66,7 +68,8 @@ async function redeem_veCarv(address:HardhatEthersSigner){
             console.log(`Not enough veCarv to redeem ${ethers.formatEther(amount)} 😿`)
         }
     }catch(e){
-        console.log("Error at redeem veCarv ❌😵❌")
+        console.log("Error at redeem veCarv ❌😵❌ see error below:")
+        console.log(e)
     }
 }
 
@@ -78,7 +81,8 @@ async function claim_esxai(address:HardhatEthersSigner){
         await tx.wait()
         console.log(`Successfully claimed esxai ✅`)
     }catch(e){
-        console.log("Error: at claim_esxai ❌😵❌")
+        console.log("Error: at claim_esxai ❌😵❌ see error below:")
+        console.log(e)
     }
 }
 
@@ -96,7 +100,8 @@ async function redeem_esxai(address:HardhatEthersSigner){
             console.log(`Not enough esxai to redeem ${ethers.formatEther(amount)}😿`)
         }
     }catch(e){
-        console.log("Error at redeem esxai ❌😵❌")
+        console.log("Error at redeem esxai ❌😵❌ see error below:")
+        console.log(e)
     }
 
 }
@@ -115,7 +120,8 @@ async function claim_xai(address:HardhatEthersSigner){
         console.log(`Balance after: ${ethers.formatEther(balance)} ✅`)
         fs.writeFileSync(filePath,(number_of_claim+1).toString())
     }catch(e){
-        console.log("Error at claim xai ❌😵❌")
+        console.log("Error at claim xai ❌😵❌ see error below:")
+        console.log(e)
     }
 }
 
