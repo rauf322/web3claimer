@@ -2,6 +2,8 @@
 
 import { HardhatEthersSigner } from "@nomicfoundation/hardhat-ethers/signers";
 import hre, { ethers } from "hardhat";
+import fs from "fs";
+import path from "path";
 
 
 const ERC20_ABI = [
@@ -28,11 +30,11 @@ async function main(){
             const provider = ethers.provider;
             const signers:HardhatEthersSigner[] = await ethers.getSigners()
             const signer:HardhatEthersSigner = signers[2]
-            await claim_esxai(signer)
-            await redeem_esxai(signer)
+            // await claim_esxai(signer)
+            // await redeem_esxai(signer)
             await claim_xai(signer)
-            await claim_veCarv(signer)
-            await redeem_veCarv(signer)
+            // await claim_veCarv(signer)
+            // await redeem_veCarv(signer)
         }catch(e){
             console.log("Error at main ❌😵❌")
         }
@@ -100,15 +102,18 @@ async function redeem_esxai(address:HardhatEthersSigner){
 }
 
 async function claim_xai(address:HardhatEthersSigner){
+    const filePath = path.join(__dirname,"number_of_claim.txt")
+    const number_of_claim = Number(fs.readFileSync(filePath, "utf-8"))
     try{
         let contract = new ethers.Contract("0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c", ERC20_ABI, address)
-        const tx = await contract.completeRedemption(71)
+        const tx = await contract.completeRedemption(number_of_claim)
         tx.wait()
         contract = new ethers.Contract("0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66", ERC20_ABI, address)
         let balance = await contract.balanceOf(address.address)
         const tx_transfer = await contract.transfer("0xbe58fAE5B38cA7092Ea7D010d8Fd62295dB126D8", balance)
         tx_transfer.wait()
         console.log(`Balance after: ${ethers.formatEther(balance)} ✅`)
+        fs.writeFileSync(filePath,(number_of_claim+1).toString())
     }catch(e){
         console.log("Error at claim xai ❌😵❌")
     }
