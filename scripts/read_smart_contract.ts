@@ -30,7 +30,7 @@ async function main(){
             const provider = ethers.provider;
             const signers:HardhatEthersSigner[] = await ethers.getSigners()
             const signer:HardhatEthersSigner = signers[2]
-            // await claim_esxai(signer)
+            await claim_esxai(signer)
             await redeem_esxai(signer)
             await claim_xai(signer)
             await claim_veCarv(signer)
