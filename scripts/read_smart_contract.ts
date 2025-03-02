@@ -24,8 +24,7 @@ const ERC20_ABI = [
 ]
 
 async function main(){
-    for (let i = 0; i < 1; i++){
-        try{
+    try{
             console.log("Connect to provide(RPC) started...")
             const provider = ethers.provider;
             const signers:HardhatEthersSigner[] = await ethers.getSigners()
@@ -39,8 +38,6 @@ async function main(){
             console.log("Error at main ❌😵❌ see error below:")
             console.log(e)
         }
-    }
-
 }
 
 async function claim_veCarv(address:HardhatEthersSigner){
@@ -79,7 +76,8 @@ async function claim_esxai(address:HardhatEthersSigner){
         const contract = new ethers.Contract("0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5", ERC20_ABI, address)
         const tx = await contract.claimFromPools(["0x7b9F49fc73C380E13a0bDCf91B53C0AE612Df8BF","0x76B1121F1861e38a290eC980143149D5695B9997"])
         await tx.wait()
-        console.log(`Successfully claimed esxai ✅`)
+        const balance = await contract.balanceOf(address.address)
+        console.log(`Successfully claimed esxai amount of:${ethers.formatEther(balance)} ✅`)
     }catch(e){
         console.log("Error: at claim_esxai ❌😵❌ see error below:")
         console.log(e)
@@ -90,7 +88,7 @@ async function redeem_esxai(address:HardhatEthersSigner){
     try{
         const contract = new ethers.Contract("0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c", ERC20_ABI, address)
         const amount = await contract.balanceOf(address.address)
-        if (Number(ethers.formatEther(amount)) >= 100){
+        if (Number(ethers.formatEther(amount)) >= 75){
             const duration = 15552000;
             const tx = await contract.startRedemption(amount, duration);
             await tx.wait()
@@ -110,15 +108,17 @@ async function claim_xai(address:HardhatEthersSigner){
     const filePath = path.join(__dirname,"number_of_claim.txt")
     const number_of_claim = Number(fs.readFileSync(filePath, "utf-8"))
     try{
-        let contract = new ethers.Contract("0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c", ERC20_ABI, address)
-        const tx = await contract.completeRedemption(number_of_claim)
-        tx.wait()
-        contract = new ethers.Contract("0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66", ERC20_ABI, address)
-        let balance = await contract.balanceOf(address.address)
-        const tx_transfer = await contract.transfer("0xbe58fAE5B38cA7092Ea7D010d8Fd62295dB126D8", balance)
-        tx_transfer.wait()
-        console.log(`Balance after: ${ethers.formatEther(balance)} ✅`)
-        fs.writeFileSync(filePath,(number_of_claim+1).toString())
+        while (true){
+            let contract = new ethers.Contract("0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c", ERC20_ABI, address)
+            const tx = await contract.completeRedemption(number_of_claim)
+            tx.wait()
+            contract = new ethers.Contract("0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66", ERC20_ABI, address)
+            let balance = await contract.balanceOf(address.address)
+            const tx_transfer = await contract.transfer("0xbe58fAE5B38cA7092Ea7D010d8Fd62295dB126D8", balance)
+            tx_transfer.wait()
+            console.log(`Xai was claimed and send in amount of:${ethers.formatEther(balance)} ✅`)
+            fs.writeFileSync(filePath,(number_of_claim+1).toString())
+        }
     }catch(e){
         console.log("Error at claim xai ❌😵❌ see error below:")
         console.log(e)
