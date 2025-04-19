@@ -70,7 +70,7 @@ async function redeem_veCarv(address: HardhatEthersSigner) {
             const duration = 12960000
             const tx = await contract.withdraw(amount, duration)
             await tx.wait()
-            console.log(`Successfully redeemed veCarv ${amount} ✅`)
+            console.log(`Successfully redeemed veCarv ${ethers.formatEther(amount)} ✅`)
         } else {
             console.log(
                 `Not enough veCarv to redeem ${ethers.formatEther(amount)} 😿`
@@ -119,7 +119,7 @@ async function redeem_esxai(address: HardhatEthersSigner) {
             const tx = await contract.startRedemption(amount, duration)
             await tx.wait()
             // console.log(tx)
-            console.log(`Successfully redeemed esxai ${amount} ✅`)
+            console.log(`Successfully redeemed esxai ${ethers.formatEther(amount)} ✅`)
         } else {
             console.log(
                 `Not enough esxai to redeem ${ethers.formatEther(amount)}😿`
